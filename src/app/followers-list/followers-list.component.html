@@ -1,3 +1,10 @@
-<div *ngFor="let user of data">
-  <follower [user]="user" ></follower>
+<div *ngIf="!failed; else elseBlock">
+  <div *ngFor="let user of data">
+    <follower [user]="user"></follower>
+  </div>
 </div>
+<ng-template #elseBlock>
+  <div>
+    <h3>User not found.</h3>
+  </div>
+</ng-template>

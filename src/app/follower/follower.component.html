@@ -1,7 +1,5 @@
 <div class="follower flex p-4 pl-0 border-b-2 border-gray-600">
-  <div>
-    <img [src]="user.avatar_url" class="w-16 h-16 rounded-full">
-  </div>
+  <img [src]="user.avatar_url" class="w-16 h-16 rounded-full">
   <div class="ml-4 flex flex-col justify-center">
     <h3>{{ user.login }}</h3>
     <p><a [href]="user.html_url" target="_blank" class="hover:text-gray-400 transition-all duration-200">{{ user.html_url }}</a></p>

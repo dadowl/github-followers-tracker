@@ -16,7 +16,6 @@ export class SearchFormComponent {
 
   submitForm() {
     if (this.inputValue.length < 2) return;
-    console.log('Отправлено: ', this.inputValue);
     this.inputValueChange.emit(this.inputValue);
   }
 }
