@@ -2,6 +2,7 @@ import {Component, Input, SimpleChanges} from '@angular/core';
 import {ApiService} from "../api.service";
 import {NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {FollowerComponent} from "../follower/follower.component";
+import {GithubUser} from "../github-user";
 
 @Component({
   selector: 'followers-list',
@@ -16,11 +17,11 @@ import {FollowerComponent} from "../follower/follower.component";
   styleUrl: './followers-list.component.css'
 })
 export class FollowersListComponent {
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService<Array<GithubUser>>) {}
 
   @Input() username: string = '';
   failed: boolean = false;
-  data: any = null;
+  users: Array<GithubUser> = [];
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['username']) {
@@ -30,11 +31,11 @@ export class FollowersListComponent {
 
   getFollowers(){
     if (this.username.length < 1) return;
-    this.data = null;
+    this.users = [];
     this.failed = false;
     this.apiService.getData("http://api.github.com/users/"+this.username+"/followers").subscribe(
       (response) => {
-        this.data = response;
+        this.users = response;
       },
       (error) => {
         console.error('Ошибка при получении данных:', error);

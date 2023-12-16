@@ -1,5 +1,5 @@
 <div *ngIf="!failed; else elseBlock">
-  <div *ngFor="let user of data">
+  <div *ngFor="let user of users">
     <follower [user]="user"></follower>
   </div>
 </div>

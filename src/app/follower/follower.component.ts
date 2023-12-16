@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {GithubUser} from "../github-user";
 
 @Component({
   selector: 'follower',
@@ -8,5 +9,5 @@ import {Component, Input} from '@angular/core';
   styleUrl: './follower.component.css'
 })
 export class FollowerComponent {
-  @Input() user: any
+  @Input() user!: GithubUser
 }
