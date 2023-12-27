@@ -1,10 +1,21 @@
-<div *ngIf="!failed; else elseBlock">
-  <div *ngFor="let user of users">
-    <follower [user]="user"></follower>
-  </div>
-</div>
-<ng-template #elseBlock>
+<div *ngIf="isLoad; then load else followersBlock"></div>
+
+<ng-template #load>
   <div>
+    <h3>Loading...</h3>
+  </div>
+</ng-template>
+
+<ng-template #followersBlock>
+  <div *ngIf="users != null && users.length > 0">
+    <div *ngFor="let user of users">
+      <follower [user]="user"></follower>
+    </div>
+  </div>
+  <div *ngIf="username.length > 0 && users == null">
     <h3>User not found.</h3>
+  </div>
+  <div *ngIf="username.length > 0 && users != null && users.length < 1">
+    <h3>Followers is empty.</h3>
   </div>
 </ng-template>

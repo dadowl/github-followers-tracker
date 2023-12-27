@@ -1,5 +1,5 @@
-import {Component, Input, SimpleChanges} from '@angular/core';
-import {ApiService} from "../api.service";
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {FollowersService} from "../followers.service";
 import {NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {FollowerComponent} from "../follower/follower.component";
 import {GithubUser} from "../github-user";
@@ -16,12 +16,12 @@ import {GithubUser} from "../github-user";
   templateUrl: './followers-list.component.html',
   styleUrl: './followers-list.component.css'
 })
-export class FollowersListComponent {
-  constructor(private apiService: ApiService<Array<GithubUser>>) {}
+export class FollowersListComponent implements OnChanges{
+  constructor(private apiService: FollowersService) {}
 
   @Input() username: string = '';
-  failed: boolean = false;
-  users: Array<GithubUser> = [];
+  isLoad: boolean = false;
+  users: Array<GithubUser> | null = null;
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['username']) {
@@ -32,14 +32,11 @@ export class FollowersListComponent {
   getFollowers(){
     if (this.username.length < 1) return;
     this.users = [];
-    this.failed = false;
-    this.apiService.getData("http://api.github.com/users/"+this.username+"/followers").subscribe(
+    this.isLoad = true;
+    this.apiService.getData("https://api.github.com/users/"+this.username+"/followers").subscribe(
       (response) => {
+        this.isLoad = false;
         this.users = response;
-      },
-      (error) => {
-        console.error('Ошибка при получении данных:', error);
-        this.failed = true;
       }
     );
   }
